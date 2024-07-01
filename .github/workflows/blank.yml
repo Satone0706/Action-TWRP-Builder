@@ -13,7 +13,7 @@ jobs:
       - name: Download clang & kernel source
         run: |
           git clone https://gitlab.com/jjpprrrr/prelude-clang.git clang --depth=1
-          git clone https://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@github.com/Xirudly/kernel_xiaomi_sm8150 -b 14 kernel --depth=1
+          git clone https://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@github.com/Xirudly/kernel_xiaomi_sm8150 -b 14 kernel --depth=1
           
       - name: Build kernel
         run: |
