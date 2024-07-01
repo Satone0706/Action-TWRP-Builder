@@ -13,12 +13,12 @@ jobs:
       - name: Download clang & kernel source
         run: |
           git clone https://gitlab.com/jjpprrrr/prelude-clang.git clang --depth=1
-          git clone https://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@github.com/Xirudly/kernel_xiaomi_sm8150 -b crux kernel --depth=1
+          git clone https://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@github.com/Xirudly/kernel_xiaomi_sm8150 -b 14 kernel --depth=1
           
       - name: Build kernel
         run: |
-          export KBUILD_BUILD_USER="Kuriyama"
-          export KBUILD_BUILD_HOST="Crux-Kernel"
+          export KBUILD_BUILD_USER="Shichimiya"
+          export KBUILD_BUILD_HOST="Raphael-Kernel"
           export PATH=$GITHUB_WORKSPACE/clang/bin:${PATH}
           args="                  O=out \
                                   ARCH=arm64 \
@@ -31,8 +31,7 @@ jobs:
                                   CROSS_COMPILE=$GITHUB_WORKSPACE/clang/bin/aarch64-linux-gnu- \
                                   CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/clang/bin/arm-linux-gnueabi- "
           cd kernel
-          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-          make ${args} crux_defconfig && make -j$(nproc --all) ${args}
+          make ${args} raphael_defconfig && make -j$(nproc --all) ${args}
           
       - name: Package kernel
         run: |
@@ -41,11 +40,11 @@ jobs:
           rm -rf AnyKernel3/.git
           cp kernel/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
           cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3/
-          zip -r XTKernel-crux.zip AnyKernel3/*
+          zip -r Shichimiya-raphael.zip AnyKernel3/*
           
       - name: Upload kernel
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "Kuriyama-crux.zip"
-          tag: "Kuriyama-crux-20240701"
+          artifacts: "Shichimiya-raphael.zip"
+          tag: "Shichimiya-raphael-20240701"
           token: ${{ secrets.GITHUB_TOKEN }}
